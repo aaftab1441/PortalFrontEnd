@@ -1,0 +1,53 @@
+.outer {
+    height:100%;
+    display:inline-block;
+    width:calc(100% - 250px);
+    float:left;
+    padding:20px;
+}
+.sectionLeft {
+    padding-right: 4px;
+}
+.sectionRight {
+    padding-left: 4px;
+}
+.formSection {
+    padding: 2px 8px;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    background-color: #f8f8f9;
+    margin-bottom: 8px;
+}
+.tableSection.wide {
+    display:flex;
+}
+.tableSection.narrow {
+    display:none;
+}
+@media screen and (max-width:1338px) {
+    .outer {
+        display: block;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 769px) {
+    .sectionLeft {
+        padding: 0;
+    }
+    .sectionRight {
+        padding: 0;
+    }
+    .sectionSolo {
+        padding:0;
+    }
+    .sectionRow {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .tableSection.wide {
+        display:none;
+    }
+    .tableSection.narrow {
+        display:flex;
+    }
+}

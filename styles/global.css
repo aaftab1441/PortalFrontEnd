@@ -1,0 +1,168 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600';
+/**********************************************************************************************************************/
+/* PRESENTATION */
+/**********************************************************************************************************************/
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family:'Open Sans', sans-serif !important;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body > div:first-child {
+  height:100%;
+}
+/**********************************************************************************************************************/
+/* GLOBAL TEXT STYLES */
+/**********************************************************************************************************************/
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem !important;
+}
+h1.green, h2.green, h3.green, h4.green, h5.green, h6.green, p.green {
+  color: #377037;
+}
+h1.red, h2.red, h3.red, h4.red, h5.red, h6.red, p.red {
+  color: red;
+}
+h1.blue, h2.blue, h3.blue, h4.blue, h5.blue, h6.blue, p.blue {
+  color: #1e96be;
+}
+p {
+  font-size:.85rem;
+}
+
+h1.noMargin, h2.noMargin, h3.noMargin, h4.noMargin, h5.noMargin, h6.noMargin, p.noMargin {
+  margin-bottom:0 !important;
+}
+/**********************************************************************************************************************/
+/* MOBILE RESPONSIVE */
+/**********************************************************************************************************************/
+@media screen and (max-width: 769px) {
+  /*TEXT STYLING*/
+  h1 {font-size:2rem !important;}
+  h2 {font-size:1.75rem !important;}
+  h3 {font-size:1.5rem !important;}
+  h4 {font-size:1.25rem !important;}
+  h5 {font-size:1rem !important;}
+  h6 {font-size:.85rem !important;}
+  p {font-size:.75rem;}
+  /*MODAL LAYOUT*/
+  .modal {
+    padding:0 !important;
+  }
+  .modal-dialog {
+    width:100% !important;
+    margin:0 !important;
+    max-width: 100% !important;
+  }
+  .modal-dialog .container {
+    max-width:100%;
+  }
+  .modal-footer h4 {
+    width:100%;
+  }
+}
+/**********************************************************************************************************************/
+/* OTHER */
+/**********************************************************************************************************************/
+
+.container {
+  padding:0 !important;
+}
+select {
+  width:100%;
+  max-width:100%;
+}
+label {
+  margin-right:16px;
+}
+input[type=checkbox], input[type=radio] {
+  margin-right:2px;
+}
+input[type="text"].standard,
+input[type="password"].standard,
+select.standard {
+  border: 1px solid #e5e5e4;
+  padding: 10px;
+  background-color: #fff;
+  width: 100%;
+  margin-bottom: .5rem;
+  height: 36px;
+}
+select.standard {
+  padding: 0 0 0 10px;
+}
+input[type="text"]:not(:read-only).standard:focus, input[type="password"]:not(read-only).standard:focus, select:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+input[type="text"].error,input[type="password"].error,select.error {
+  border-color:red;
+}
+input[type="text"]:read-only {
+  background-color: lightgrey;
+  cursor:default;
+}
+input[type="text"]:read-only:focus {
+  border:none;
+  outline: none;
+}
+select {
+  padding:0;
+}
+.fontRed {
+  color:red;
+}
+.content-section {
+  padding: 2px 8px;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+  background-color: #f8f8f9;
+  margin-bottom:8px;
+}
+.container.even-odd .row:nth-child(odd) {
+  background-color:#f6f4f5;
+}
+.container.even-odd .row {
+  margin:0;
+}
+/*tables*/
+table {
+  width:100%;
+  border:none;
+}
+thead {
+  border-bottom: 1px solid #d3d3d3;
+  border-top: 1px solid #d3d3d3;
+}
+thead tr {
+  height:32px;
+}
+tbody tr {
+  height: 24px;
+}
+table tr:nth-child(odd) {
+  background-color: #f6f4f5;
+}
+td {
+  padding:8px;
+}
+th {
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #1e96be;
+  background-color: #f8f8f9;
+  font-size: 15px;
+  font-weight: 600;
+}
+.react-datepicker-wrapper {
+  width:100%;
+}
+
+

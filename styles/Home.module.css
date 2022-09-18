@@ -1,0 +1,51 @@
+.main {
+    height:100%;
+    overflow-y:auto;
+    /*background-color: rgb(243, 244, 249);*/
+    background-color: #e7e9e9;;
+}
+.division {
+    height:100%;
+    padding: 120px 20px 100px;
+    overflow-y: auto;
+}
+.dashboard {
+    height: 100%;
+    overflow-y: auto;
+    padding: 60px 0 50px 0;
+}
+.page {
+    display:inline-block;
+    float:left;
+    width:calc(100% - 250px);
+    padding:20px;
+}
+p.important {
+    font-weight: bold;
+    padding: 0 4%;
+    line-height: 20px;
+}
+p.bullet {
+    padding: 0 6%;
+    position:relative;
+}
+p.bullet span:first-child {
+    font-size: .35rem;
+    position: absolute;
+    top: .45rem;
+    left: 4%;
+}
+p.bullet span:last-child {
+    font-weight:bold;
+}
+@media screen and (max-width:1338px) {
+    .dashboard {
+        padding: 120px 0 50px 0;
+    }
+    .page {
+        display: block;
+        width:100%;
+    }
+}
+
+

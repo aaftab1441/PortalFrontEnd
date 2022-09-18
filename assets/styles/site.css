@@ -1,0 +1,11 @@
+#search div.d-flex div {
+    width: 100%;
+}
+
+.MuiFormControl-root {
+    width: 100%;
+}
+
+.MuiFormControl-root input {
+    padding: 10px !important;
+}

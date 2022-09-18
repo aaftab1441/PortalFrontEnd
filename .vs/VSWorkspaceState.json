@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\redux",
+    "\\redux\\sagas",
+    "\\redux\\sagas\\usercontainers",
+    "\\redux\\sagas\\usercontainers\\common",
+    "\\redux\\sagas\\usercontainers\\common\\isoparametersmaintain",
+    "\\redux\\sagas\\usercontainers\\common\\isoparametersmaintain\\search"
+  ],
+  "PreviewInSolutionExplorer": false
+}
