@@ -281,16 +281,20 @@ function GetMerchantAddStep4(props) {
 
 	const columns = [
     {
-        name: 'id',
-        selector: row => row.id,
+        name: 'DBA Name',
+        selector: row => row.dbaName,
     },
     {
-        name: 'Year',
-        selector: row => row.year,
+        name: 'Zip Code',
+        selector: row => row.zipCode,
     },
 	{
-        name: 'Title',
-        selector: row => row.title,
+        name: 'Zip State',
+        selector: row => row.zipState,
+    },
+	{
+        name: 'Contact Name',
+        selector: row => row.name,
     },
     {
         name: 'Actions',
@@ -300,17 +304,26 @@ function GetMerchantAddStep4(props) {
 
 const data = [
     {
-        id: 1,
-        title: 'Beetlejuice',
-        year: '1988',
+        dbaName: 1,
+        zipCode: '12345',
+        name: 'Beetlejuice',
+        zipState: '1988',
 		action: <EditIcon onClick={()=> handleClickOpen()}>Edit</EditIcon>
     },
     {
-        id: 2,
-        title: 'Ghostbusters',
-        year: '1984',
+        dbaName: 1,
+        zipCode: '12345',
+        name: 'Beetlejuice',
+        zipState: '1988',
 		action: <EditIcon onClick={()=> handleClickOpen()}>Edit</EditIcon>
     },
+	{
+		dbaName: 1,
+        zipCode: '12345',
+        name: 'Beetlejuice',
+        zipState: '1988',
+		action: <EditIcon onClick={()=> handleClickOpen()}>Edit</EditIcon>
+	}
 ]
 
 const [open, setOpen] = React.useState(false);
@@ -397,7 +410,7 @@ const [open, setOpen] = React.useState(false);
 										<Col md="9 text-right">
 										</Col>
 										<Col md="3 text-right">
-											{button}
+											<Button variant="contained" color="success" size="small" type="submit" className="col-md-12"> Submit Application </Button>
 										</Col>
 									</Row>
 								</div>
@@ -2873,12 +2886,9 @@ const [open, setOpen] = React.useState(false);
 											<Col md="3">
 												<Button variant="contained" color="primary" type="button" onClick={() => props.performReturn()} className="col-md-12"> Return </Button>
 											</Col>
-											<Col md="3">&nbsp;</Col>
+											<Col md="6">&nbsp;</Col>
 											<Col md="3">
 												<Button variant="contained" color="primary" type="submit" className="col-md-12"> Save &amp; Continue </Button>
-											</Col>
-											<Col md="3">
-												{button}
 											</Col>
 										</div>
 									</ValidatorForm>
