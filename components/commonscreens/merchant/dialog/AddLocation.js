@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ValidatorForm } from 'react-material-ui-form-validator';
-import TextBox from '../../common/TextBox';
-import SelectField from '../../common/SelectField';
-import ValidatedDatePicker from '../../common/ValidatedDatePicker';
-import * as StringUtils from '../../../utilities/string';
+import TextBox from '../../../common/TextBox';
+import SelectField from '../../../common/SelectField';
+import ValidatedDatePicker from '../../../common/ValidatedDatePicker';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import EditIcon from '@mui/icons-material/Edit';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import StepLabel from '@mui/material/StepLabel';
 import DataTable from 'react-data-table-component';
@@ -27,389 +26,17 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { TabPanel } from '/components/common/TabPanel';
-
-// import styled from 'styled-components';
-function a11yProps(index) {
-	return {
-		id: `simple-tab-${index}`,
-		'aria-controls': `simple-tabpanel-${index}`,
-	};
-}
-
-function GetMerchantAddStep4(props) {
-	let stateList = [];
-	let appMessages = StringUtils.getDisplayMessages(props.messages);
-	let yesNoList = [];
-	let existingterminalmanufacturerList = [];
-	let pmtgatewayList = [];
-	let sellproductareaList = [];
-	let sellingtypeList = [];
-	let typeofaccountList = [];
-	let whoenterscreditcardinfoList = [];
-	let merchantpcicompliantList = [];
-	let posmanufacturerList = [];
-	let softwareList = [];
-	let previousprocessorterminatedreasonList = [];
-	let selectedcardsList = [];
-	let replacerefundList = [];
-	let warranteeguaranteetypeList = [];
-	let customer_chargedList = [];
-	let daystosubmittransactionsList = [];
-	let mktingmethodList = [];
-	let merchanttypeList = [];
-	let seasonalmonthsList = [];
-	let cardpaymentonList = [];
-	let documentTypeList = [];
-
-	const ITEM_HEIGHT = 48;
-	const ITEM_PADDING_TOP = 8;
-	const MenuProps = {
-		PaperProps: {
-			style: {
-				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-				width: 250,
-			},
-		},
-	};
-
-	const arrayChunk = (arr, n) => {
-		const array = arr.slice();
-		const chunks = [];
-		while (array.length) chunks.push(array.splice(0, n));
-		return chunks;
-	};
-
-	let feeTemplates = [];
-
-	if (props.templates) {
-		feeTemplates = props.templates.map(function (anItem, index) {
-			return <MenuItem value={anItem.id} key={index}>{anItem.name}</MenuItem>;
-		});
-	}
-
-	let dynamicUI;
-
-	if (props.templates) {
-
-		let selectedTemplate = props.templates.find(obj => {
-			return obj.id === props.selectedTemplateId
-		})
-		if (selectedTemplate) {
-
-			dynamicUI = selectedTemplate.categories.map((category, indexO) => (
-				<div key={indexO}>
-					<Row>
-						<Col>{category.name}</Col>
-						<br /><br />
-					</Row>
-					{arrayChunk(category.fees, 3).map((fees, i) => (
-						<Row key={indexO + '_' + i}>
-							<div className='col-md-12 form-group'>
-								<Row>
-									{fees.map((fee, index) => (
-										<Col md={4} key={indexO + '_' + index}>
-											<label >{fee.description} (Low: {fee.lowValue} High: {fee.highValue})</label>
-											<TextBox
-												value={(fee.defaultValue)}
-												onChange={props.handleItemChange}
-												validators={[]}
-												type="range"
-												errorMessages={["REQUIRED"]}
-												placeholder=""
-												variant={'outlined'} size="small"
-												inputProps={{
-													name: `${fee.name + '-' + category.id + '-' + fee.id}`,
-													id: `${fee.name + '_' + category.id + '_' + fee.id}`,
-													placeholder: '',
-													type: 'text',
-												}}
-											/>
-										</Col>
-									))}
-								</Row>
-							</div>
-						</Row>
-					))}
-				</div>
-			))
-		}
-	}
+import { TabPanel } from '../../../../components/common/TabPanel';
 
 
-	if (props.lists && props.lists.STATUS) {
-		stateList = props.lists.STATES.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.SEASONAL_MONTHS_LIST) {
-		seasonalmonthsList = props.lists.SEASONAL_MONTHS_LIST.map(function (anItem, index) {
-			return <MenuItem key={index} value={anItem.code}>
-				<Checkbox checked={props.location.seasonalmonths?.indexOf(anItem.code) > -1} />
-				<ListItemText primary={anItem.value} />
-			</MenuItem>
-		});
-	}
-	if (props.lists && props.lists.MERCHANT_TYPE_LIST) {
-		merchanttypeList = props.lists.MERCHANT_TYPE_LIST.map(function (anItem, index) {
-			return <MenuItem key={index} value={anItem.code}>
-				<Checkbox checked={props.location.merchanttype?.indexOf(anItem.code) > -1} />
-				<ListItemText primary={anItem.value} />
-			</MenuItem>
-		});
-	}
-	if (props.lists && props.lists.MARKETING_METHODS_LIST) {
-		mktingmethodList = props.lists.MARKETING_METHODS_LIST.map(function (anItem, index) {
-			return <MenuItem key={index} value={anItem.code}>
-				<Checkbox checked={props.location.mktingmethod?.indexOf(anItem.code) > -1} />
-				<ListItemText primary={anItem.value} />
-			</MenuItem>
-		});
-	}
-	if (props.lists && props.lists.YES_NO_LIST) {
-		yesNoList = props.lists.YES_NO_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.TYPE_OF_ACCOUNT_LIST) {
-		typeofaccountList = props.lists.TYPE_OF_ACCOUNT_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.SELLING_TYPE_LIST) {
-		sellingtypeList = props.lists.SELLING_TYPE_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.SELL_PRODUCT_AREA_LIST) {
-		sellproductareaList = props.lists.SELL_PRODUCT_AREA_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.SELECTED_CARDS_LIST) {
-		selectedcardsList = props.lists.SELECTED_CARDS_LIST.map(function (anItem, index) {
-			return <MenuItem key={index} value={anItem.code}>
-				<Checkbox checked={props.location.selectedcards?.indexOf(anItem.code) > -1} />
-				<ListItemText primary={anItem.value} />
-			</MenuItem>
-		});
-	}
-	if (props.lists && props.lists.REPLACE_REFUND_LIST) {
-		replacerefundList = props.lists.REPLACE_REFUND_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.WARRANTEE_GUARANTEE_TYPE_LIST) {
-		warranteeguaranteetypeList = props.lists.WARRANTEE_GUARANTEE_TYPE_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.CUSTOMER_CHARGED_LIST) {
-		customer_chargedList = props.lists.CUSTOMER_CHARGED_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.DAYS_TO_SUBMIT_TRANSACTIONS_LIST) {
-		daystosubmittransactionsList = props.lists.DAYS_TO_SUBMIT_TRANSACTIONS_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.CARD_PAYMENT_ON_LIST) {
-		cardpaymentonList = props.lists.CARD_PAYMENT_ON_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.PREVIOUS_PROCESSOR_TERMINATED_REASON_LIST) {
-		previousprocessorterminatedreasonList = props.lists.PREVIOUS_PROCESSOR_TERMINATED_REASON_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.WHO_ENTERS_CREDIT_CARD_INFO_LIST) {
+export default function AddLocation({ Open, close }) {
 
-		whoenterscreditcardinfoList = props.lists.WHO_ENTERS_CREDIT_CARD_INFO_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.POS_MANUFACTURER_LIST) {
-		posmanufacturerList = props.lists.POS_MANUFACTURER_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.MERCHANT_PCI_COMPLIANT_LIST) {
-		merchantpcicompliantList = props.lists.MERCHANT_PCI_COMPLIANT_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.EXISTING_TERMINAL_MANUFACTURER_LIST) {
-		existingterminalmanufacturerList = props.lists.EXISTING_TERMINAL_MANUFACTURER_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.PAYMENT_GATEWAY_LIST) {
-		pmtgatewayList = props.lists.PAYMENT_GATEWAY_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	if (props.lists && props.lists.SOFTWARE_LIST) {
-		softwareList = props.lists.SOFTWARE_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-	const documents = props.location.documents.map((anItem, index) =>
-		<TableRow key={index}>
-			<TableCell>&nbsp;</TableCell>
-			<TableCell>{anItem.document_type} </TableCell>
-			<TableCell>{anItem.upload_document}</TableCell>
-		</TableRow>
-	);
-
-	let button;
-	const hasLocations = props.locations.length > 0;
-	if (hasLocations) {
-		button = <Button variant="contained" color="success" size="small" type="submit" className="col-md-12"> Submit Application </Button>
-	} else {
-		button = <Button variant="contained" color="success" size="small" type="submit" className="col-md-12" disabled={true}> Submit Application </Button>
-	}
-
-	if (props.lists && props.lists.STATUS) {
-
-		documentTypeList = props.lists.DOCUMENT_TYPE_LIST.map(function (anItem, index) {
-			return <MenuItem value={anItem.code} key={index}>{anItem.value}</MenuItem>;
-		});
-	}
-
-
-	const columns = [
-    {
-        name: 'id',
-        selector: row => row.id,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-    },
-	{
-        name: 'Title',
-        selector: row => row.title,
-    },
-    {
-        name: 'Actions',
-        selector: row => row.action,
-    }
-];
-
-const data = [
-    {
-        id: 1,
-        title: 'Beetlejuice',
-        year: '1988',
-		action: <EditIcon onClick={()=> handleClickOpen()}>Edit</EditIcon>
-    },
-    {
-        id: 2,
-        title: 'Ghostbusters',
-        year: '1984',
-		action: <EditIcon onClick={()=> handleClickOpen()}>Edit</EditIcon>
-    },
-]
-
-const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-	return (
-		<div>
-			<div className="row">
-				<div className="col-lg-12">
-					<div className="card">
-						<div className="card-body">
-							<div className="row">
-								<div className="col-12" id="search">
-									<div className="row">
-										<div className="col-lg-6 col-md-6">
-											<h4>Location Information</h4>
-											
-										</div>
-										<div className="col-lg-6 col-md-6 text-right">
-										</div>
-									</div>
-
-
-									{appMessages && appMessages.length > 0 && <div id="error" className="btn-outline-danger">{appMessages}</div>}
-
-									<Paper>
-										<Stepper activeStep={3} alternativeLabel>
-											<Step key={'General_Information'}>
-												<StepLabel>General Information</StepLabel>
-											</Step>
-											<Step key={'Merchant_Owner'}>
-												<StepLabel>Merchant Owner</StepLabel>
-											</Step>
-											<Step key={'ISO'}>
-												<StepLabel>ISO</StepLabel>
-											</Step>
-											<Step key={'Merchant_Management'}>
-												<StepLabel>Location</StepLabel>
-											</Step>
-											{/* <Step key={'Fee_Disc'}>
-												<StepLabel>Fee/Disc</StepLabel>
-											</Step> */}
-										</Stepper>
-										<div className="col-md-12 form-group">
-											<div className="row">
-										<div className="col-lg-6 col-md-6">
-											Location Information
-										</div>
-										<div className="col-lg-6 col-md-6 text-right">
-											<Button 
-												color='primary'
-												variant="contained"
-												size="small"
-												onClick={handleClickOpen}
-											>Add Location</Button>
-											
-										</div>
-											</div>
-										<DataTable 
-											columns={columns}
-											data={data}
-										// title={"Batch"} 
-										// onRowClicked={(data) => props.viewBatchDetail(data)}
-										// paginationTotalRows={props.currentMerchant.batch.Count} 
-										// data={props.currentMerchant.batch.Data}
-										// paginationPerPage={props.currentMerchant.batch.PageSize} 
-										// columns={batchColumns} paginationServer={true}
-										// onChangePage={(page, totalRows) => changePage('batch', page)}
-										// paginationRowsPerPageOptions={[10,30,50,100]} 
-										// customStyles={customStyles} 
-										// onSort={(column, sortDirection) => handleBatchSort('batch', column, sortDirection)} sortServer
-										// onChangeRowsPerPage={(currentRowsPerPage, currentPage) => changeRowsPerPage('batch', currentRowsPerPage, currentPage)} pagination
-										/>
-										</div>
-									</Paper> 
-									<Row>
-										<Col md="9 text-right">
-										</Col>
-										<Col md="3 text-right">
-											{button}
-										</Col>
-									</Row>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<Dialog
+  return (
+     
+    			<Dialog
 				maxWidth="md"
-    		    open={open}
-        		onClose={handleClose}
+    		    open={Open}
+        		onClose={close}
         		aria-labelledby="alert-dialog-title"
         		aria-describedby="alert-dialog-description"
       		>
@@ -425,7 +52,6 @@ const [open, setOpen] = React.useState(false);
 											<Tab label="Business Information" {...a11yProps(3)} disableRipple />
 											<Tab label="Processing Information" {...a11yProps(4)} disableRipple />
 											<Tab label="Document(s) Upload" {...a11yProps(5)} disableRipple />
-											<Tab label="Fee/Disc" {...a11yProps(6)} disableRipple />
 										</Tabs>
 			<TabPanel value={props.locationPanel} index={0}>
           <ValidatorForm className="pt-3" onSubmit={() => props.updateActiveTab(1)}>
@@ -2780,15 +2406,12 @@ const [open, setOpen] = React.useState(false);
 																	validators={[]}
 																	errorMessages={[]}
 																	variant={'outlined'} size="small"
-																	InputProps={{
-																		accept: '.pdf'
-																	}}
 																	inputProps={{
 																		name: 'upload_document',
 																		id: 'upload_document',
 																		placeholder: 'DOCUMENT',
 																		type: 'file',
-																		accept: '.pdf',
+																		accept: 'application/pdf',
 																		classselector: "h-auto"
 																	}}
 																/>
@@ -2836,65 +2459,18 @@ const [open, setOpen] = React.useState(false);
 													<Col md="3">
 														<Button variant="contained" color="primary" type="button" onClick={() => props.saveLocation(props.locations, props.location, props.lists)} className="col-md-12"> Save Location </Button>
 													</Col>
-													
+													<Col md="3">
+														{button}
+													</Col>
 												</Row>
 											</ValidatorForm>
-										</TabPanel>
-										<TabPanel value={props.locationPanel} index={6}>
-											<ValidatorForm className="pt-3" onSubmit={(data) => props.addMerchantStep5(props.selectedTemplateId, props.templates, props.merchantId)}>
-										<Row>
-											<Col>FEES</Col>
-											<br /><br />
-										</Row>
-										<Row>
-											<div className='col-md-12 form-group'>
-												<Col>
-													<label>Fee Templates:</label>
-													<SelectField
-														value={(props.selectedTemplateId)}
-														onChange={props.handleItemChange}
-														validators={[]}
-														variant="outlined" size="small"
-														errorMessages={[]}
-														inputProps={{
-															name: 'selectedTemplateId',
-															id: 'selectedTemplateId',
-														}}
-													>
-														{feeTemplates}
-													</SelectField>
-												</Col>
-											</div>
-										</Row>
-
-										{dynamicUI}
-
-										<div className="row">
-											<Col md="3">
-												<Button variant="contained" color="primary" type="button" onClick={() => props.performReturn()} className="col-md-12"> Return </Button>
-											</Col>
-											<Col md="3">&nbsp;</Col>
-											<Col md="3">
-												<Button variant="contained" color="primary" type="submit" className="col-md-12"> Save &amp; Continue </Button>
-											</Col>
-											<Col md="3">
-												{button}
-											</Col>
-										</div>
-									</ValidatorForm>
-										</TabPanel>
+											</TabPanel>
         </DialogContent>
         <DialogActions>
-          <Button size="small" variant="contained" onClick={handleClose}>Close</Button>
-		  <Button size="small" color="primary" variant="contained" onClick={handleClose}>Save</Button>
+          <Button size="small" variant="contained" onClick={close}>Close</Button>
         </DialogActions>
       </Dialog>
-		</div>
-	);
+   
+  );
 }
-GetMerchantAddStep4.propTypes = {
-	displayWarning: PropTypes.func,
-};
-
-export default GetMerchantAddStep4;
-
+ 
