@@ -15,21 +15,21 @@ import { withRouter } from "next/router";
 
 
 
-import Footer from "../common/GetFooter";
-import Header from "../common/GetHeader";
+import Footer from "../../../components/common/GetFooter";
+import Header from "../../../components/common/GetHeader";
 
-import Loading from "../common/Loading";
+import Loading from "../../../components/common/Loading";
 
-import GetMerchantAddStep5 from "../commonscreens/merchant/GetMerchantAddStep5";
-import Navbar from "../common/GetNavbar";
+import GetMerchantAddStep5 from "../../../components/commonscreens/merchant/GetMerchantAddStep5";
+import Navbar from "../../../components/common/GetNavbar";
 
-import Sidebar from "../common/GetSidebar";
-import SettingsPanel from "../common/GetSettingsPanel";
+import Sidebar from "../../../components/common/GetSidebar";
+import SettingsPanel from "../../../components/common/GetSettingsPanel";
 
 
-import * as Actions from "../../redux/actions/usercontainers/common/merchantadd/merchantaddstep5/action";
-import * as Constants from "../../redux/actions/usercontainers/common/merchantadd/merchantaddstep5/constants";
-import * as AppConstants from "../../utilities/constants";
+import * as Actions from "../../../redux/actions/usercontainers/common/merchantadd/merchantaddstep5/action";
+import * as Constants from "../../../redux/actions/usercontainers/common/merchantadd/merchantaddstep5/constants";
+import * as AppConstants from "../../../utilities/constants";
 
 class MerchantAddStep5 extends React.PureComponent {
 	constructor(props) {

@@ -81,76 +81,67 @@ function GetMerchantAddStep4(props) {
   };
 
   const arrayChunk = (arr, n) => {
-    const array = arr.slice();
-    const chunks = [];
-    while (array.length) chunks.push(array.splice(0, n));
-    return chunks;
-  };
+		const array = arr.slice();
+		const chunks = [];
+		while (array.length) chunks.push(array.splice(0, n));
+		return chunks;
+	};
 
-  let feeTemplates = [];
+	let feeTemplates = [];
 
-  if (props.templates) {
-    feeTemplates = props.templates.map(function (anItem, index) {
-      return (
-        <MenuItem value={anItem.id} key={index}>
-          {anItem.name}
-        </MenuItem>
-      );
-    });
-  }
+	if (props.templates) {
+		feeTemplates = props.templates.map(function (anItem, index) {
+			return <MenuItem value={anItem.id} key={index}>{anItem.name}</MenuItem>;
+		});
+	}
 
-  let dynamicUI;
+	let dynamicUI;
 
-  if (props.templates) {
-    let selectedTemplate = props.templates.find((obj) => {
-      return obj.id === props.selectedTemplateId;
-    });
-    if (selectedTemplate) {
-      dynamicUI = selectedTemplate.categories.map((category, indexO) => (
-        <div key={indexO}>
-          <Row>
-            <Col>{category.name}</Col>
-            <br />
-            <br />
-          </Row>
-          {arrayChunk(category.fees, 3).map((fees, i) => (
-            <Row key={indexO + "_" + i}>
-              <div className="col-md-12 form-group">
-                <Row>
-                  {fees.map((fee, index) => (
-                    <Col md={4} key={indexO + "_" + index}>
-                      <label>
-                        {fee.description} (Low: {fee.lowValue} High:{" "}
-                        {fee.highValue})
-                      </label>
-                      <TextBox
-                        value={fee.defaultValue}
-                        onChange={props.handleItemChange}
-                        validators={[]}
-                        type="range"
-                        errorMessages={["REQUIRED"]}
-                        placeholder=""
-                        variant={"outlined"}
-                        size="small"
-                        inputProps={{
-                          name: `${
-                            fee.name + "-" + category.id + "-" + fee.id
-                          }`,
-                          id: `${fee.name + "_" + category.id + "_" + fee.id}`,
-                          placeholder: "",
-                          type: "text",
-                        }}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            </Row>
-          ))}
-        </div>
-      ));
-    }
-  }
+	if (props.templates) {
+
+		let selectedTemplate = props.templates.find(obj => {
+			return obj.id === props.selectedTemplateId
+		})
+		if (selectedTemplate) {
+
+			dynamicUI = selectedTemplate.categories.map((category, indexO) => (
+				<div key={indexO}>
+					<Row>
+						<Col>{category.name}</Col>
+						<br /><br />
+					</Row>
+					{arrayChunk(category.fees, 3).map((fees, i) => (
+						<Row key={indexO + '_' + i}>
+							<div className='col-md-12 form-group'>
+								<Row>
+									{fees.map((fee, index) => (
+										<Col md={4} key={indexO + '_' + index}>
+											<label >{fee.description} (Low: {fee.lowValue} High: {fee.highValue})</label>
+											<TextBox
+												value={(fee.defaultValue)}
+												onChange={props.handleItemChange}
+												validators={[]}
+												type="range"
+												errorMessages={["REQUIRED"]}
+												placeholder=""
+												variant={'outlined'} size="small"
+												inputProps={{
+													name: `${fee.name + '-' + category.id + '-' + fee.id}`,
+													id: `${fee.name + '_' + category.id + '_' + fee.id}`,
+													placeholder: '',
+													type: 'text',
+												}}
+											/>
+										</Col>
+									))}
+								</Row>
+							</div>
+						</Row>
+					))}
+				</div>
+			))
+		}
+	}
 
   if (props.lists && props.lists.STATUS) {
     stateList = props.lists.STATES.map(function (anItem, index) {
@@ -410,6 +401,7 @@ function GetMerchantAddStep4(props) {
     });
   }
   const documents = props.location.documents.map((anItem, index) => (
+    
     <TableRow key={index}>
       <TableCell>&nbsp;</TableCell>
       <TableCell>{anItem.document_type} </TableCell>
@@ -517,6 +509,9 @@ function GetMerchantAddStep4(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  
+	const [fileName, setFileName] = React.useState()
 
   return (
     <div>
@@ -3193,7 +3188,8 @@ function GetMerchantAddStep4(props) {
             <ValidatorForm
               className="pt-3"
               onSubmit={() => {
-                props.addMerchantStep4(props.locations, props.merchantId);
+                props.updateActiveTab(6)
+                // props.addMerchantStep4(props.locations, props.merchantId);
               }}
             >
               <>
@@ -3230,9 +3226,6 @@ function GetMerchantAddStep4(props) {
                         errorMessages={[]}
                         variant={"outlined"}
                         size="small"
-                        InputProps={{
-                          accept: ".pdf",
-                        }}
                         inputProps={{
                           name: "upload_document",
                           id: "upload_document",
@@ -3287,13 +3280,82 @@ function GetMerchantAddStep4(props) {
                 </div>
               </>
               <Row>
+                  <Col md={10}></Col>
+                  <Col md={1}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      type="button"
+                      onClick={() => props.updateActiveTab(4)}
+                    >
+                      {" "}
+                      Back{" "}
+                    </Button>
+                  </Col>
+                  <Col md={1} className="text-right">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      type="submit"
+                    >
+                      {" "}
+                      Next{" "}
+                    </Button>
+                  </Col>
+                </Row>
+              
+            </ValidatorForm>
+          </TabPanel>
+          <TabPanel value={props.locationPanel} index={6}>
+            <ValidatorForm
+              className="pt-3"
+              onSubmit={(data) =>
+                {props.addMerchantStep4(props.locations, props.merchantId)
+                props.addMerchantStep5(
+                  props.selectedTemplateId,
+                  props.templates,
+                  props.merchantId
+                )}
+              }
+            >
+              <Row>
+                <Col>FEES</Col>
+                <br />
+                <br />
+              </Row>
+              <Row>
+                <div className="col-md-12 form-group">
+                  <Col>
+                    <label>Fee Templates:</label>
+                    <SelectField
+                      value={props.selectedTemplateId}
+                      onChange={props.handleItemChange}
+                      validators={[]}
+                      variant="outlined"
+                      size="small"
+                      errorMessages={[]}
+                      inputProps={{
+                        name: "selectedTemplateId",
+                        id: "selectedTemplateId",
+                      }}
+                    >
+                      {feeTemplates}
+                    </SelectField>
+                  </Col>
+                </div>
+              </Row>
+
+              {dynamicUI}
+              <Row>
                 <Col md="3">
                   <Button
                     variant="contained"
                     color="primary"
                     type="button"
                     className="col-md-12"
-                    onClick={() => props.updateActiveTab(4)}
+                    onClick={() => props.updateActiveTab(5)}
                   >
                     {" "}
                     Back to last tab{" "}
@@ -3330,49 +3392,7 @@ function GetMerchantAddStep4(props) {
                   </Button>
                 </Col>
               </Row>
-            </ValidatorForm>
-          </TabPanel>
-          <TabPanel value={props.locationPanel} index={6}>
-            <ValidatorForm
-              className="pt-3"
-              onSubmit={(data) =>
-                props.addMerchantStep5(
-                  props.selectedTemplateId,
-                  props.templates,
-                  props.merchantId
-                )
-              }
-            >
-              <Row>
-                <Col>FEES</Col>
-                <br />
-                <br />
-              </Row>
-              <Row>
-                <div className="col-md-12 form-group">
-                  <Col>
-                    <label>Fee Templates:</label>
-                    <SelectField
-                      value={props.selectedTemplateId}
-                      onChange={props.handleItemChange}
-                      validators={[]}
-                      variant="outlined"
-                      size="small"
-                      errorMessages={[]}
-                      inputProps={{
-                        name: "selectedTemplateId",
-                        id: "selectedTemplateId",
-                      }}
-                    >
-                      {feeTemplates}
-                    </SelectField>
-                  </Col>
-                </div>
-              </Row>
-
-              {dynamicUI}
-
-              <div className="row">
+              {/* <div className="row">
                 <Col md="3">
                   <Button
                     variant="contained"
@@ -3397,7 +3417,7 @@ function GetMerchantAddStep4(props) {
                     Save &amp; Continue{" "}
                   </Button>
                 </Col>
-              </div>
+              </div> */}
             </ValidatorForm>
           </TabPanel>
         </DialogContent>
@@ -3418,6 +3438,7 @@ function GetMerchantAddStep4(props) {
     </div>
   );
 }
+
 GetMerchantAddStep4.propTypes = {
   displayWarning: PropTypes.func,
 };

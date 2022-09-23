@@ -46,8 +46,9 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
     case Constants.ADD_MERCHANT_STEP4_ACTION:
       return { ...state, loading: true, changeState: state.changeState + 4 };
     case Constants.RECEIVED_MERCHANT_DATA_ACTION:
-      state.merchantId = action.data.Success;
-      return { ...state, loading: false, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_5_PATH };
+      return { ...state, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_1_PATH };
+      // state.merchantId = action.data.Success;
+      // return { ...state, loading: false, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_5_PATH };
     case Constants.MOVE_TO_URL_ACTION:
       return { ...state, task: action.type, moveToUrl: action.url, navigationParams: action.params };
     case Constants.PERFORM_RETURN_ACTION:
@@ -67,6 +68,7 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
       state.formFile = action.formFile;
       return { ...state, document: editDocument };
     case Constants.SAVE_LOCATION:
+      debugger
       state.location.selectedcards = state.location.selectedcards?.join(', ');
       state.location.mktingmethod = state.location.mktingmethod?.join(', ');
       state.location.merchanttype = state.location.merchanttype?.join(', ');
