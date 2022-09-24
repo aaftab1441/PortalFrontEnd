@@ -12,6 +12,25 @@ function* submitLocation(params) {
   yield put(Actions.locationSaved(params.location));
 }
 
+function* getLocations(id) {
+
+  const requestURL = AppConstants.BASE_HOST_URL + `Location/GetLocations`;
+
+  const options = { method: 'GET', headers: { "Content-Type": "application/json" }, body: {id}, credentials: 'same-origin' };
+
+  try {
+    const receiveJson = yield fetch(requestURL, options);  //Fetch call.
+    const receivedData = yield receiveJson.json();  //Convert to JSON.
+    if (receivedData) {
+      yield put(Actions.receivedLocationsDataAction(receivedData));
+    } else {
+      yield put(Actions.receivedLocationsDataError(null, receivedData));
+    }
+  } catch (err) {
+    yield put(Actions.receivedLocationsDataError(err, err));
+  }
+}
+
 function* submitMerchantStep4(params) {
 
   const data = { merchantId: params.merchantId, locations: params.locations };
@@ -60,4 +79,5 @@ export default function* watchMerchantAddStep4Saga() {
   yield takeLatest(Constants.ADD_MERCHANT_STEP4_ACTION, submitMerchantStep4);
   yield takeLatest(Constants.SAVE_LOCATION, submitLocation);
   yield takeLatest(Constants.HANDLE_DOCUMENT_UPLOAD_ACTION, uploadDocument);
+  yield takeLatest(Constants.GET_LOCATIONS, getLocations);
 }

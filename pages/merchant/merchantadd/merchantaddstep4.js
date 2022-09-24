@@ -34,7 +34,8 @@ class MerchantAddStep4 extends React.PureComponent {
 	}
 
 	componentDidMount() {
-
+		console.log("calling action there")
+		this.props.getLocations(this.props.merchantId)
 	}
 
 	render() {
@@ -83,6 +84,7 @@ MerchantAddStep4.propTypes = {
 	handleMultiSelectChange: PropTypes.func,
 	navigateToUrl: PropTypes.func,
 	addMerchantStep4: PropTypes.func,
+	getLocations: PropTypes.func,
 	saveLocation: PropTypes.func,
 	locations: PropTypes.array,
 	location: PropTypes.object,
@@ -103,6 +105,7 @@ const mapStateToProps = (state) => {
 	return {
 		task: state.merchantAddStep4.task,
 		loading: state.merchantAddStep4.loading,
+		allLocations : state.merchantAddStep4.locations,
 		messages: state.central.messages,
 		moveToUrl: state.merchantAddStep4.moveToUrl,
 		lists: state.central.lists,
@@ -127,6 +130,7 @@ function mapDispatchToProps(dispatch) {
 		updateActiveTab: (tabKey) => dispatch(Actions.updateActiveTabAction(tabKey)),
 		performReturn: () => dispatch(Actions.performReturnAction()),
 		addMerchantStep4: (locations, merchantId) => dispatch(Actions.addMerchantStep4Action(locations, merchantId)),
+		getLocations: ( merchantId) => dispatch(Actions.getLocationsAction( merchantId)),
 		saveLocation: (locations, location, lists) => dispatch(Actions.saveLocation(locations, location, lists)),
 		navigateToUrl: (url, params) => dispatch(Actions.moveToUrlAction(url, params)),
 		handleItemChange: (evt, checked) => dispatch(Actions.handleItemChange(evt.target.name, evt.target.value, checked)),

@@ -33,6 +33,7 @@ const initialState = {
     previousstatements: '', previousecommerce: '', seasonal: '', haveretaillocation: '', amexsvcreq: '', acceptamex: '', processdiscover: '', acceptdiscover: '', ebtsignup: '', warranteeguaranteeoffered: '', NEXTDAYFUNDING: '', mktnegativeresponseorauto: '', immediatedelivery: '', refundpolicyexist: '', recurringcharge: '', fulfillmentpaymentbefore: '', merchantpcicompliant: ''
   },
   locations: [],
+  allLocations:[],
   changeState: 0,
   locationPanel: 0,
   selectedDocumentType: '',
@@ -45,10 +46,23 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
   switch (action.type) {
     case Constants.ADD_MERCHANT_STEP4_ACTION:
       return { ...state, loading: true, changeState: state.changeState + 4 };
+    
+    case Constants.GET_LOCATIONS:
+      console.log('Reducer firstly get locations', action.payload)
+      return { ...state, allLocations: action.payload};
+
     case Constants.RECEIVED_MERCHANT_DATA_ACTION:
       return { ...state, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_1_PATH };
       // state.merchantId = action.data.Success;
       // return { ...state, loading: false, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_5_PATH };
+      
+    case Constants.RECEIVED_LOCATIONS_DATA_ACTION:
+      console.log('LOCATIONS DATA', action.payload);
+      debugger
+      return { 
+        ...state, 
+        allLocations: action.payload
+      };
     case Constants.MOVE_TO_URL_ACTION:
       return { ...state, task: action.type, moveToUrl: action.url, navigationParams: action.params };
     case Constants.PERFORM_RETURN_ACTION:

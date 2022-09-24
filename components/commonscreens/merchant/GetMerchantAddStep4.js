@@ -592,7 +592,14 @@ function GetMerchantAddStep4(props) {
                         variant="contained"
                         color="success"
                         size="small"
-                        type="submit"
+                        onClick={() => {
+                          props.addMerchantStep4(props.locations, props.merchantId)
+                          props.addMerchantStep5(
+                            props.selectedTemplateId,
+                            props.templates,
+                            props.merchantId
+                          )
+                        }}
                         className="col-md-12"
                       >
                         {" "}
@@ -3321,12 +3328,12 @@ function GetMerchantAddStep4(props) {
                     props.location,
                     props.lists
                   )
-                  props.addMerchantStep4(props.locations, props.merchantId)
-                  props.addMerchantStep5(
-                  props.selectedTemplateId,
-                  props.templates,
-                  props.merchantId
-                )
+                //   props.addMerchantStep4(props.locations, props.merchantId)
+                //   props.addMerchantStep5(
+                //   props.selectedTemplateId,
+                //   props.templates,
+                //   props.merchantId
+                // )
               }
               }
             >
@@ -3359,6 +3366,7 @@ function GetMerchantAddStep4(props) {
 
               {dynamicUI}
               <Row>
+                <Col md="3"></Col>
                 <Col md="3">
                   <Button
                     variant="contained"
@@ -3368,7 +3376,7 @@ function GetMerchantAddStep4(props) {
                     onClick={() => props.updateActiveTab(5)}
                   >
                     {" "}
-                    Back to last tab{" "}
+                    Back{" "}
                   </Button>
                 </Col>
                 <Col md="3">
@@ -3426,7 +3434,7 @@ function GetMerchantAddStep4(props) {
           </TabPanel>
         </DialogContent>
         <DialogActions>
-          <Button size="small" variant="contained" onClick={handleClose}>
+          <Button size="large" variant="contained" onClick={handleClose}>
             Close
           </Button>
         </DialogActions>
