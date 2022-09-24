@@ -68,11 +68,6 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
       state.formFile = action.formFile;
       return { ...state, document: editDocument };
     case Constants.SAVE_LOCATION:
-      debugger
-      state.location.selectedcards = state.location.selectedcards?.join(', ');
-      state.location.mktingmethod = state.location.mktingmethod?.join(', ');
-      state.location.merchanttype = state.location.merchanttype?.join(', ');
-      state.location.seasonalmonths = state.location.seasonalmonths?.join(', ');
       return { ...state, loading: true };
     case Constants.LOCATION_SAVED:
       return { ...state, loading: false, changeState: state.changeState + 1 };

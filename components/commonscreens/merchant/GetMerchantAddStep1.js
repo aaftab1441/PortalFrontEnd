@@ -59,9 +59,9 @@ function GetMerchantAddStep1(props) {
 										<Step key={'Merchant_Management'}>
 											<StepLabel>Location</StepLabel>
 										</Step>
-										<Step key={'Fee_Disc'}>
+										{/* <Step key={'Fee_Disc'}>
 											<StepLabel>Fee/Disc</StepLabel>
-										</Step>
+										</Step> */}
 									</Stepper>
 									<ValidatorForm className="pt-3" onSubmit={() => { props.saveMerchant(props.merchant) }}>
 										<Row>

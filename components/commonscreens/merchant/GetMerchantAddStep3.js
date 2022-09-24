@@ -34,9 +34,9 @@ function GetMerchantAddStep3(props) {
 										<Step key={'Merchant_Management'}>
 											<StepLabel>Location</StepLabel>
 										</Step>
-										<Step key={'Fee_Disc'}>
+										{/* <Step key={'Fee_Disc'}>
 											<StepLabel>Fee/Disc</StepLabel>
-										</Step>
+										</Step> */}
 									</Stepper>
 									<ValidatorForm className="pt-3" onSubmit={() => { props.saveIsoInfo(props.isoInfo, props.merchantId) }}>
 

@@ -3311,13 +3311,23 @@ function GetMerchantAddStep4(props) {
           <TabPanel value={props.locationPanel} index={6}>
             <ValidatorForm
               className="pt-3"
-              onSubmit={(data) =>
-                {props.addMerchantStep4(props.locations, props.merchantId)
-                props.addMerchantStep5(
+              onSubmit={() =>
+                {
+                  console.log('handle Close before modal', open)
+                  handleClose()
+                  console.log('handle Close after modal', open)
+                  props.saveLocation(
+                    props.locations,
+                    props.location,
+                    props.lists
+                  )
+                  props.addMerchantStep4(props.locations, props.merchantId)
+                  props.addMerchantStep5(
                   props.selectedTemplateId,
                   props.templates,
                   props.merchantId
-                )}
+                )
+              }
               }
             >
               <Row>
@@ -3375,17 +3385,11 @@ function GetMerchantAddStep4(props) {
                 </Col>
                 <Col md="3">
                   <Button
-                    variant="contained"
-                    color="primary"
-                    type="button"
-                    onClick={() =>
-                      props.saveLocation(
-                        props.locations,
-                        props.location,
-                        props.lists
-                      )
-                    }
-                    className="col-md-12"
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      type="submit"
+                      className="col-md-12"
                   >
                     {" "}
                     Save Location{" "}
@@ -3424,14 +3428,6 @@ function GetMerchantAddStep4(props) {
         <DialogActions>
           <Button size="small" variant="contained" onClick={handleClose}>
             Close
-          </Button>
-          <Button
-            size="small"
-            color="primary"
-            variant="contained"
-            onClick={handleClose}
-          >
-            Save
           </Button>
         </DialogActions>
       </Dialog>
