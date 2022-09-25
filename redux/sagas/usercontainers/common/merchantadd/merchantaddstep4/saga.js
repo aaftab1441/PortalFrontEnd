@@ -14,19 +14,27 @@ function* submitLocation(params) {
 
 function* getLocations(id) {
 
-  const requestURL = AppConstants.BASE_HOST_URL + `Location/GetLocations`;
-
-  const options = { method: 'GET', headers: { "Content-Type": "application/json" }, body: {id}, credentials: 'same-origin' };
+  console.log('Get locations', id.merchantId)
+  const requestURL = AppConstants.BASE_HOST_URL + `Location/GetLocations/${id.merchantId}`;
+  const data = { id: id.merchantId};
+  // const options = { method: 'GET', headers: { "Content-Type": "application/json" }, body: JSON.stringify(data), credentials: 'same-origin' };
+  const options = { method: 'GET', headers: { "Content-Type": "application/json" }, credentials: 'same-origin' };
 
   try {
+    
     const receiveJson = yield fetch(requestURL, options);  //Fetch call.
+    console.log("Receive JSON", receiveJson)
+
     const receivedData = yield receiveJson.json();  //Convert to JSON.
+
+    console.log("Receive data in action saga in catch", receivedData)
     if (receivedData) {
       yield put(Actions.receivedLocationsDataAction(receivedData));
     } else {
       yield put(Actions.receivedLocationsDataError(null, receivedData));
     }
   } catch (err) {
+    console.log("Receive data in action saga in catch", err)
     yield put(Actions.receivedLocationsDataError(err, err));
   }
 }

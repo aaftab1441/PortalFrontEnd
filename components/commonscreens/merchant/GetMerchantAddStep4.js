@@ -472,7 +472,7 @@ function GetMerchantAddStep4(props) {
     },
     {
       name: "Actions",
-      selector: (row) => row.action,
+      selector: (row) => <EditIcon onClick={() => handleClickOpen(row)}>Edit</EditIcon>,
     },
   ];
 
@@ -480,29 +480,31 @@ function GetMerchantAddStep4(props) {
     {
       dbaName: 1,
       zipCode: "12345",
-      name: "Beetlejuice",
+      name: "Beetlejuice1",
       zipState: "1988",
-      action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
     },
     {
       dbaName: 1,
       zipCode: "12345",
-      name: "Beetlejuice",
+      name: "Beetlejuice2",
       zipState: "1988",
-      action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
+      // action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
     },
     {
       dbaName: 1,
       zipCode: "12345",
-      name: "Beetlejuice",
+      name: "Beetlejuice3",
       zipState: "1988",
-      action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
+      // action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
     },
   ];
 
   const [open, setOpen] = React.useState(false);
+  const [modal, setModal] = React.useState({});
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (row) => {
+    console.log('Row data', row)
+    setModal(row)
     setOpen(true);
   };
 
@@ -620,7 +622,7 @@ function GetMerchantAddStep4(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Add Location"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{modal.name}</DialogTitle>
         <DialogContent>
           <Tabs
             value={props.locationPanel}
