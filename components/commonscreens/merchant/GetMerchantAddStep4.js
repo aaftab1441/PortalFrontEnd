@@ -47,6 +47,14 @@ function a11yProps(index) {
 function GetMerchantAddStep4(props) {
   let stateList = [];
   let appMessages = StringUtils.getDisplayMessages(props.messages);
+  let allLocations;
+  
+  if (props && props.allLocations) {
+    allLocations = props.allLocations;
+  };
+  console.log('props location', allLocations)
+  debugger
+
   let yesNoList = [];
   let existingterminalmanufacturerList = [];
   let pmtgatewayList = [];
@@ -455,20 +463,24 @@ function GetMerchantAddStep4(props) {
 
   const columns = [
     {
-      name: "DBA Name",
-      selector: (row) => row.dbaName,
+      name: "Name",
+      selector: (row) => row.name,
     },
     {
       name: "Zip Code",
-      selector: (row) => row.zipCode,
+      selector: (row) => row.zipcode,
     },
     {
-      name: "Zip State",
-      selector: (row) => row.zipState,
+      name: "Address",
+      selector: (row) => row.address,
     },
     {
-      name: "Contact Name",
-      selector: (row) => row.name,
+      name: "State",
+      selector: (row) => row.state,
+    },
+    {
+      name: "Bank Account",
+      selector: (row) => row.bankaccount,
     },
     {
       name: "Actions",
@@ -476,28 +488,17 @@ function GetMerchantAddStep4(props) {
     },
   ];
 
-  const data = [
-    {
-      dbaName: 1,
-      zipCode: "12345",
-      name: "Beetlejuice1",
-      zipState: "1988",
-    },
-    {
-      dbaName: 1,
-      zipCode: "12345",
-      name: "Beetlejuice2",
-      zipState: "1988",
-      // action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
-    },
-    {
-      dbaName: 1,
-      zipCode: "12345",
-      name: "Beetlejuice3",
-      zipState: "1988",
-      // action: <EditIcon onClick={() => handleClickOpen()}>Edit</EditIcon>,
-    },
-  ];
+  const data = allLocations;
+
+  const handleBatchSort  = (tableName, column, sortDirection) => {
+		let params = getPageDefaults(tableName);
+		params['SortField'] = column.sortField;
+		params['SortDirection'] = sortDirection;
+		props.changePage(params, props.user, props.currentMerchant.Merchant);
+	};
+
+  console.log('location data', data)
+  debugger 
 
   const [open, setOpen] = React.useState(false);
   const [modal, setModal] = React.useState({});
@@ -507,6 +508,12 @@ function GetMerchantAddStep4(props) {
     setModal(row)
     setOpen(true);
   };
+
+  const changePage = function(tableName, page) {
+		let pageInfo = getPageDefaults(tableName);
+		pageInfo['Page'] = page;
+		props.changePage(pageInfo, props.user, props.currentMerchant.Merchant);
+ 	}
 
   const handleClose = () => {
     setOpen(false);
@@ -573,17 +580,18 @@ function GetMerchantAddStep4(props) {
                       <DataTable
                         columns={columns}
                         data={data}
+                        pagination
                         // title={"Batch"}
                         // onRowClicked={(data) => props.viewBatchDetail(data)}
                         // paginationTotalRows={props.currentMerchant.batch.Count}
                         // data={props.currentMerchant.batch.Data}
                         // paginationPerPage={props.currentMerchant.batch.PageSize}
-                        // columns={batchColumns} paginationServer={true}
+                        // columns={batchColumns} 
+                        // paginationServer={true}
                         // onChangePage={(page, totalRows) => changePage('batch', page)}
                         // paginationRowsPerPageOptions={[10,30,50,100]}
                         // customStyles={customStyles}
-                        // onSort={(column, sortDirection) => handleBatchSort('batch', column, sortDirection)} sortServer
-                        // onChangeRowsPerPage={(currentRowsPerPage, currentPage) => changeRowsPerPage('batch', currentRowsPerPage, currentPage)} pagination
+                        onSort={(column, sortDirection) => handleBatchSort('batch', column, sortDirection)} sortServer
                       />
                     </div>
                   </Paper>

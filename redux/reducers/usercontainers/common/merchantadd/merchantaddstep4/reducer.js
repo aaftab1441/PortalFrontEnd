@@ -48,8 +48,9 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
       return { ...state, loading: true, changeState: state.changeState + 4 };
 
     case Constants.GET_LOCATIONS:
+      debugger
       console.log('Reducer firstly get locations', action)
-      return { ...state, allLocations: action };
+      return { ...state };
 
     case Constants.RECEIVED_MERCHANT_DATA_ACTION:
       return { ...state, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_1_PATH };
@@ -57,7 +58,7 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
     // return { ...state, loading: false, task: Constants.MOVE_TO_URL_ACTION, moveToUrl: AppConstants.MERCHANT_ADD_STEP_5_PATH };
 
     case Constants.RECEIVED_LOCATIONS_DATA_ACTION:
-      console.log('LOCATIONS DATA', action);
+      console.log('LOCATIONS DATA', state.allLocations);
       debugger
       return {
         ...state,
