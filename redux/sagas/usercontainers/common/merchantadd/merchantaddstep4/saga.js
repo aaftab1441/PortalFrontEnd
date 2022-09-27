@@ -5,10 +5,14 @@ import * as Constants from "/redux/actions/usercontainers/common/merchantadd/mer
 import * as AppConstants from "/utilities/constants";
 import { LOCATION_CHANGE } from 'connected-react-router';
 
-function* submitLocation(params) {
+function* saveLocation(params) {
 
   params.locations.push(params.location);
-
+  console.log('params', params)
+  debugger
+  // params.allLocations.push(params.locations);
+  debugger
+  // console.log('locations', params.allLocations)
   yield put(Actions.locationSaved(params.location));
 }
 
@@ -84,7 +88,7 @@ export function* uploadDocument(params) {
 
 export default function* watchMerchantAddStep4Saga() {
   yield takeLatest(Constants.ADD_MERCHANT_STEP4_ACTION, submitMerchantStep4);
-  yield takeLatest(Constants.SAVE_LOCATION, submitLocation);
+  yield takeLatest(Constants.SAVE_LOCATION, saveLocation);
   yield takeLatest(Constants.HANDLE_DOCUMENT_UPLOAD_ACTION, uploadDocument);
   yield takeLatest(Constants.GET_LOCATIONS, getLocations);
 }

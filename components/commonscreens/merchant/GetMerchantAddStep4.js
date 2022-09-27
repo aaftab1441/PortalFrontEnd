@@ -35,6 +35,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { TabPanel } from "/components/common/TabPanel";
+import { CallToActionSharp } from "@mui/icons-material";
+import action from "../../../redux/actions/usercontainers/common/merchantadd/merchantaddstep4/action";
 
 // import styled from 'styled-components';
 function a11yProps(index) {
@@ -3338,14 +3340,13 @@ function GetMerchantAddStep4(props) {
                     props.location,
                     props.lists
                   )
-                //   props.addMerchantStep4(props.locations, props.merchantId)
-                //   props.addMerchantStep5(
-                //   props.selectedTemplateId,
-                //   props.templates,
-                //   props.merchantId
-                // )
-              }
-              }
+                  action.saveLocation(
+                    props.locations,
+                    props.location,
+                    props.lists
+                  )
+                  props.locationSaved(props.location)
+              }}
             >
               <Row>
                 <Col>FEES</Col>

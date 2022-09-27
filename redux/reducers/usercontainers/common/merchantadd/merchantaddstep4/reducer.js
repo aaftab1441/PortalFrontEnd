@@ -82,10 +82,29 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
       editDocument[action.theName] = action.theValue;
       state.formFile = action.formFile;
       return { ...state, document: editDocument };
+
     case Constants.SAVE_LOCATION:
-      return { ...state, loading: true };
+      console.log('action', action.location)
+      debugger
+      console.log('action', allLocations)
+      debugger
+      return { ...state, loading: true, 
+        // allLocations: state.allLocations.concat(action.location) 
+        allLocations: [...state.allLocations, action.location]
+      };
     case Constants.LOCATION_SAVED:
-      return { ...state, loading: false, changeState: state.changeState + 1 };
+        debugger
+        console.log('save reducer', action.data)
+        debugger
+        console.log('action', allLocations)
+        debugger
+      return { 
+        ...state, 
+        loading: false, 
+        changeState: state.changeState + 1,  
+        allLocations: [...state.allLocations, action.data]
+        // allLocations: state.allLocations.concat(action.location)
+      };
     case Constants.HANDLE_MULTISELECT_CHANGE_ACTION:
       editLocation = state.location;
       editLocation[action.theName] = action.theValue;

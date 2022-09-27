@@ -77,7 +77,7 @@ MerchantAddStep4.propTypes = {
 	dispatch: PropTypes.func.isRequired,
 	loading: PropTypes.bool,
 	user: PropTypes.object,
-	allLocations: PropTypes.allLocations,
+	allLocations: PropTypes.array,
 	task: PropTypes.string,
 	lists: PropTypes.object,
 	moveToUrl: PropTypes.string,
