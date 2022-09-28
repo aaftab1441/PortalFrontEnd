@@ -86,23 +86,24 @@ const merchantAddStep4Reducer = (state = initialState, action) => {
     case Constants.SAVE_LOCATION:
       console.log('action', action.location)
       debugger
-      console.log('action', allLocations)
+      console.log('action', state.allLocations)
       debugger
       return { ...state, loading: true, 
-        // allLocations: state.allLocations.concat(action.location) 
+        // allLocations: state.allLocations.concat(action.location), 
         allLocations: [...state.allLocations, action.location]
       };
     case Constants.LOCATION_SAVED:
         debugger
         console.log('save reducer', action.data)
         debugger
-        console.log('action', allLocations)
+        console.log('action', state.allLocations)
         debugger
       return { 
         ...state, 
         loading: false, 
         changeState: state.changeState + 1,  
-        allLocations: [...state.allLocations, action.data]
+        // allLocations: state.allLocations.concat(action.data), 
+        // allLocations: [...state.allLocations, action.data]
         // allLocations: state.allLocations.concat(action.location)
       };
     case Constants.HANDLE_MULTISELECT_CHANGE_ACTION:

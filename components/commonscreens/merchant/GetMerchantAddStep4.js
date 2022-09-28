@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import TextBox from "../../common/TextBox";
@@ -54,8 +54,7 @@ function GetMerchantAddStep4(props) {
   if (props && props.allLocations) {
     allLocations = props.allLocations;
   };
-  console.log('props location', allLocations)
-  debugger
+  const [edit, setEdit] = useState(false);
 
   let yesNoList = [];
   let existingterminalmanufacturerList = [];
@@ -89,6 +88,12 @@ function GetMerchantAddStep4(props) {
       },
     },
   };
+
+  useEffect(() => {
+    console.log('render again')
+    
+  }, [allLocations]); 
+  const data = allLocations;
 
   const arrayChunk = (arr, n) => {
 		const array = arr.slice();
@@ -486,11 +491,11 @@ function GetMerchantAddStep4(props) {
     },
     {
       name: "Actions",
-      selector: (row) => <EditIcon onClick={() => handleClickOpen(row)}>Edit</EditIcon>,
+      selector: (row) => <EditIcon onClick={() => {handleClickOpen(row); setEdit(true)}}>Edit</EditIcon>,
     },
   ];
 
-  const data = allLocations;
+  
 
   const handleBatchSort  = (tableName, column, sortDirection) => {
 		let params = getPageDefaults(tableName);
@@ -606,11 +611,11 @@ function GetMerchantAddStep4(props) {
                         size="small"
                         onClick={() => {
                           props.addMerchantStep4(props.locations, props.merchantId)
-                          props.addMerchantStep5(
-                            props.selectedTemplateId,
-                            props.templates,
-                            props.merchantId
-                          )
+                          // props.addMerchantStep5(
+                          //   props.selectedTemplateId,
+                          //   props.templates,
+                          //   props.merchantId
+                          // )
                         }}
                         className="col-md-12"
                       >
@@ -632,7 +637,7 @@ function GetMerchantAddStep4(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{modal.name}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{edit ? 'Edit Location' :'Add Location'}</DialogTitle>
         <DialogContent>
           <Tabs
             value={props.locationPanel}
@@ -2577,7 +2582,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Do you currently process EBT? </label>
                       <SelectField
-                        value={props.location.ebtsignup}
+                        value={edit ? modal.location.ebtsignup : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2630,7 +2635,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>If Yes, what % of sale </label>
                       <TextBox
-                        value={props.location.depositrequiredpct}
+                        value={edit ? modal.location.depositrequiredpct : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2647,7 +2652,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>OR Flat fee</label>
                       <TextBox
-                        value={props.location.depositrequiredamt}
+                        value={edit ? modal.location.depositrequiredamt : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2666,7 +2671,7 @@ function GetMerchantAddStep4(props) {
                         Do you offer product/Service Warranty or Guarantees?
                       </label>
                       <SelectField
-                        value={props.location.warranteeguaranteeoffered}
+                        value={edit ? modal.location.warranteeguaranteeoffered : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2686,7 +2691,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>If yes, is it</label>
                       <SelectField
-                        value={props.location.replacerefund}
+                        value={edit ? modal.location.replacerefund : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2741,8 +2746,9 @@ function GetMerchantAddStep4(props) {
                         Please list all third party payment processors merchant
                         does business with{" "}
                       </label>
+                      {/* start above */}
                       <TextBox
-                        value={props.location.thirdprty5}
+                        value={edit ? modal.location.thirdprty5 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2759,7 +2765,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>When is the customers card charged ? </label>
                       <SelectField
-                        value={props.location.customer_charged}
+                        value={edit ? modal.location.customer_charged : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2775,7 +2781,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>NEXT DAY FUNDING</label>
                       <SelectField
-                        value={props.location.NEXTDAYFUNDING}
+                        value={edit ? modal.location.NEXTDAYFUNDING : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2795,7 +2801,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>If yes, please explain </label>
                       <TextBox
-                        value={props.location.mktnegativeresponseorautoother}
+                        value={edit ? modal.location.mktnegativeresponseorautoother : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2814,7 +2820,7 @@ function GetMerchantAddStep4(props) {
                         Are all of your products/services delivered immediately?{" "}
                       </label>
                       <SelectField
-                        value={props.location.immediatedelivery}
+                        value={edit ? modal.location.immediatedelivery : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2830,7 +2836,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>What is Percentage of future delivery? </label>
                       <TextBox
-                        value={props.location.futuredeliverypct}
+                        value={edit ? modal.location.futuredeliverypct : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2851,7 +2857,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Explanation of Delivery </label>
                       <TextBox
-                        value={props.location.deliveryexplanation}
+                        value={edit ? modal.location.deliveryexplanation : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2871,7 +2877,7 @@ function GetMerchantAddStep4(props) {
                         Visa/MasterCard/Discover?{" "}
                       </label>
                       <SelectField
-                        value={props.location.refundpolicyexist}
+                        value={edit ? modal.location.refundpolicyexist : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2887,7 +2893,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Please describe your Refund/Return policy </label>
                       <TextBox
-                        value={props.location.refundtype}
+                        value={edit ? modal.location.refundtype : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2911,7 +2917,7 @@ function GetMerchantAddStep4(props) {
                         do you submit credit transactions?{" "}
                       </label>
                       <SelectField
-                        value={props.location.daystosubmittransactions}
+                        value={edit ? modal.location.daystosubmittransactions : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2930,7 +2936,7 @@ function GetMerchantAddStep4(props) {
                         customers?
                       </label>
                       <SelectField
-                        value={props.location.recurringcharge}
+                        value={edit ? modal.location.recurringcharge : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2946,7 +2952,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>If Yes, indicate frequency of charges </label>
                       <TextBox
-                        value={props.location.recurringchargefrequency}
+                        value={edit ? modal.location.recurringchargefrequency : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -2967,7 +2973,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={3}>
                       <label>Is final payment due before fulfillment </label>
                       <SelectField
-                        value={props.location.fulfillmentpaymentbefore}
+                        value={edit ? modal.location.fulfillmentpaymentbefore : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -2985,7 +2991,7 @@ function GetMerchantAddStep4(props) {
                         If yes, how many days before final delivery?{" "}
                       </label>
                       <TextBox
-                        value={props.location.fulfillmentpaymentbeforedays}
+                        value={edit ? modal.location.fulfillmentpaymentbeforedays : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3005,7 +3011,7 @@ function GetMerchantAddStep4(props) {
                         card on
                       </label>
                       <SelectField
-                        value={props.location.cardpaymenton}
+                        value={edit ? modal.location.cardpaymenton : null}
                         onChange={props.handleItemChange}
                         variant="outlined"
                         size="small"
@@ -3021,7 +3027,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={3}>
                       <label>Other (Specify) </label>
                       <TextBox
-                        value={props.location.cardpaymentonother}
+                        value={edit ? modal.location.cardpaymentonother : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3048,7 +3054,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>Days to Fulfillment </label>
                       <TextBox
-                        value={props.location.daysuntildeliverydays1}
+                        value={edit ? modal.location.daysuntildeliverydays1 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3064,7 +3070,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>% of Volume </label>
                       <TextBox
-                        value={props.location.daysuntildeliveryvol1}
+                        value={edit ? modal.location.daysuntildeliveryvol1 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3084,7 +3090,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>Days to Fulfillment </label>
                       <TextBox
-                        value={props.location.daysuntildeliverydays2}
+                        value={edit ? modal.location.daysuntildeliverydays2 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3100,7 +3106,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>% of Volume </label>
                       <TextBox
-                        value={props.location.daysuntildeliveryvol2}
+                        value={edit ? modal.location.daysuntildeliveryvol2 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3120,7 +3126,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>Days to Fulfillment </label>
                       <TextBox
-                        value={props.location.daysuntildeliverydays3}
+                        value={edit ? modal.location.daysuntildeliverydays3 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3136,7 +3142,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={6}>
                       <label>% of Volume </label>
                       <TextBox
-                        value={props.location.daysuntildeliveryvol3}
+                        value={edit ? modal.location.daysuntildeliveryvol3 : null}
                         onChange={props.handleItemChange}
                         errorMessages={["REQUIRED"]}
                         variant={"outlined"}
@@ -3157,7 +3163,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Total Volume </label>
                       <TextBox
-                        value={props.location.daysuntildelivery_total_pct}
+                        value={edit ? modal.location.daysuntildelivery_total_pct : null}
                         onChange={props.handleItemChange}
                         validators={["required"]}
                         errorMessages={["Total volume is required"]}
@@ -3222,7 +3228,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Document Type</label>
                       <SelectField
-                        value={props.selectedDocumentType}
+                        value={edit ? modal.selectedDocumentType : null}
                         onChange={props.handleItemChange}
                         validators={[]}
                         errorMessages={[]}
@@ -3239,7 +3245,7 @@ function GetMerchantAddStep4(props) {
                     <Col md={4}>
                       <label>Document</label>
                       <TextBox
-                        value={props.document.upload_document}
+                        value={edit ? modal.document.upload_document : null}
                         onChange={props.handleFileChange}
                         validators={[]}
                         errorMessages={[]}
@@ -3291,7 +3297,7 @@ function GetMerchantAddStep4(props) {
                               <TableCell>File Name</TableCell>
                             </TableRow>
                           </TableHead>
-                          <TableBody>{documents}</TableBody>
+                          <TableBody>{edit ? documents : null}</TableBody>
                         </Table>
                       </TableContainer>
                     </div>
@@ -3340,12 +3346,13 @@ function GetMerchantAddStep4(props) {
                     props.location,
                     props.lists
                   )
-                  action.saveLocation(
-                    props.locations,
-                    props.location,
-                    props.lists
-                  )
-                  props.locationSaved(props.location)
+                  // action.saveLocation(
+                  //   props.locations,
+                  //   props.location,
+                  //   props.lists
+                  // )
+                  // action.locationSaved(props.location)
+                  // props.locationSaved(props.location)
               }}
             >
               <Row>
@@ -3358,7 +3365,7 @@ function GetMerchantAddStep4(props) {
                   <Col>
                     <label>Fee Templates:</label>
                     <SelectField
-                      value={props.selectedTemplateId}
+                      value={edit ? modal.selectedTemplateId : null}
                       onChange={props.handleItemChange}
                       validators={[]}
                       variant="outlined"

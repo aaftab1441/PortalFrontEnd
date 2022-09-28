@@ -36,6 +36,7 @@ class MerchantAddStep4 extends React.PureComponent {
 	componentDidMount() {
 		console.log("calling action there")
 		this.props.getLocations(this.props.merchantId)
+
 	}
 
 	render() {
@@ -106,7 +107,7 @@ const mapStateToProps = (state) => {
 	return {
 		task: state.merchantAddStep4.task,
 		loading: state.merchantAddStep4.loading,
-		allLocations : state.merchantAddStep4.locations,
+		// allLocations : state.merchantAddStep4.locations,
 		messages: state.central.messages,
 		moveToUrl: state.merchantAddStep4.moveToUrl,
 		lists: state.central.lists,
