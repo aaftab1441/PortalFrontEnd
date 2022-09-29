@@ -123,7 +123,7 @@ Redux Saga is a middleware library that allows a Redux store to interact with re
 Pull requests and stars shall always be welcomed. For bugs and feature requests, [please create an issue](https://github.com/rishav4101/create-next-saga-persist-app/issues).
 
 ## Author
-[Rishav Raj Kumar](https://github.com/rishav4101)
+[Aftab Ahmed](https://github.com/aaftab1441)
 
 ## License
 Copyright © 2021, Rishav Raj Kumar. Released under the [MIT license](https://github.com/rishav4101/create-next-saga-persist-app/blob/main/LICENSE).
